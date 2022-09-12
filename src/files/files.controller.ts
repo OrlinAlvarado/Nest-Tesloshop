@@ -1,11 +1,13 @@
 import { Controller, Get, Post, UploadedFile, UseInterceptors, BadRequestException, Param, Res } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { diskStorage } from 'multer';
 import { FilesService } from './files.service';
 import { fileFilter, fileNamer } from './helpers/';
 
+@ApiTags('Files - Get and Upload')
 @Controller('files')
 export class FilesController {
   constructor(
@@ -14,7 +16,10 @@ export class FilesController {
   ) {}
 
   @Get('product/:imageName')
-  
+  @ApiResponse({
+    status: 200,
+    description: 'Get product image',
+  })
   fineProductImage(
     @Res() res: Response,
     @Param('imageName') imageName: string
